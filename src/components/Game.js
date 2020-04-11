@@ -23,11 +23,29 @@ export default class Game extends React.Component {
   };
 
   render() {
+    let computer = 1;
+    let human = 2;
+    // computer will move with 'O'
+    // human will move with 'X'
+    let computerMove = 'O';
+    let humanMove = 'X';
+
+    //   game rules
+    let showRules = (
+      <span>
+        Choose a cell numbered from 1 to 9 as below
+        <br /> 1 | 2 | 3
+        <br />
+        4 | 5 | 6
+        <br />7 | 8 | 9
+      </span>
+    );
+
     let squareText = (index) => {
       return (
         <span>
-          {(this.state.board[index] == 1 && 'X') ||
-            (this.state.board[index] == 2 && 'O')}
+          {(this.state.board[index] == computer && computerMove) ||
+            (this.state.board[index] == human && humanMove)}
         </span>
       );
     };
@@ -36,6 +54,8 @@ export default class Game extends React.Component {
     return (
       <div>
         <h1>Diki Daki Du</h1>
+
+        <p>Game Instructions: {showRules}</p>
         <Square
           value="0"
           disabled={isDisabled(0)}
