@@ -12,12 +12,6 @@ const winlines = [
   [2, 4, 6],
 ];
 
-// function checkWinner(whoseTurn) {
-//   if (whoseTurn == 1) {
-//     console.log('Computer has won');
-//   } else console.log('Human has won');
-// }
-
 export default class Game extends React.Component {
   constructor(props) {
     super(props);
@@ -37,7 +31,6 @@ export default class Game extends React.Component {
       board: board,
       isHumanMove: !this.state.isHumanMove,
     });
-    // check winner
   };
 
   render() {
@@ -48,10 +41,29 @@ export default class Game extends React.Component {
     let computerMove = 'O';
     let humanMove = 'X';
 
-    //   game rules
+    let board = this.state.board.slice();
+
+    let Winner = '';
+
+    // check winner
+    winlines.map(function (item) {
+      if ((board[item[0]] & board[item[1]] & board[item[2]]) == human) {
+        Winner = 'Human';
+      }
+      if ((board[item[0]] & board[item[1]] & board[item[2]]) == computer) {
+        Winner = 'Computer';
+      }
+    });
+
+    let annouceWinner;
+    if (!Winner == '') {
+      annouceWinner = <span>Game Over. {Winner} has won.</span>;
+    }
+
+    // game instructions
     let showRules = (
       <span>
-        Choose a cell numbered from 1 to 9 as below
+        Game Instructions: Choose a cell numbered from 1 to 9 as below
         <br /> 1 | 2 | 3
         <br />
         4 | 5 | 6
@@ -72,17 +84,8 @@ export default class Game extends React.Component {
     return (
       <div>
         <h1>Diki Daki Du</h1>
-
-        <p>Game Instructions: {showRules}</p>
-        <p>
-          {this.state.board[0]} {this.state.board[1]} {this.state.board[2]}
-        </p>
-        <p>
-          {this.state.board[3]} {this.state.board[4]} {this.state.board[5]}
-        </p>
-        <p>
-          {this.state.board[6]} {this.state.board[7]} {this.state.board[8]}
-        </p>
+        <p> {showRules}</p>
+        <p>{annouceWinner}</p>
 
         <Square
           value="0"
