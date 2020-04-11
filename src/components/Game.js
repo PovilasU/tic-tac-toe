@@ -1,4 +1,5 @@
 import React from 'react';
+import Square from './Square';
 
 export default class Game extends React.Component {
   constructor(props) {
@@ -22,32 +23,43 @@ export default class Game extends React.Component {
   };
 
   render() {
+    let squareText = (index) => {
+      return (
+        <span>
+          {(this.state.board[index] == 1 && 'X') ||
+            (this.state.board[index] == 2 && 'O')}
+        </span>
+      );
+    };
     return (
       <div>
         <h1>Tic tac toe</h1>
-
-        <button
+        <Square
           value="0"
           disabled={!this.state.board[0] == 0}
-          onClick={this.handleClick}
-        >
-          {this.state.board[0] == 1 && 'X'} {this.state.board[0] == 2 && 'O'}
-        </button>
-        <button
+          handleClick={this.handleClick}
+          text={squareText(0)}
+        />
+        <Square
           value="1"
           disabled={!this.state.board[1] == 0}
-          onClick={this.handleClick}
-        >
-          {this.state.board[1] == 1 && 'X'} {this.state.board[1] == 2 && 'O'}
-        </button>
-        <button
-          value="2"
-          disabled={!this.state.board[2] == 0}
-          onClick={this.handleClick}
-        >
-          {this.state.board[2] == 1 && 'X'} {this.state.board[2] == 2 && 'O'}
-        </button>
+          handleClick={this.handleClick}
+          text={squareText(1)}
+        />
+
+        <br />
       </div>
     );
   }
 }
+
+// {
+//   this.state.board.map(function (item, i) {
+//     //   console.log('test');
+//     return (
+//       <button value={i}>
+//         {i} {item}
+//       </button>
+//     );
+//   });
+// }
