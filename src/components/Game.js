@@ -42,20 +42,34 @@ export default class Game extends React.Component {
     let board = this.state.board.slice();
     let Winner = '';
 
+    function seachZero(index) {
+      return index == 0;
+    }
+
     // check winner
-    winlines.map(function (item) {
+    winlines.map(function (item, i) {
       if ((board[item[0]] & board[item[1]] & board[item[2]]) == human) {
         Winner = 'Human';
-      }
-      if ((board[item[0]] & board[item[1]] & board[item[2]]) == computer) {
+      } else if (
+        (board[item[0]] & board[item[1]] & board[item[2]]) ==
+        computer
+      ) {
         Winner = 'Computer';
+      }
+
+      if (board.find(seachZero) === undefined) {
+        Winner = 'Draw';
       }
     });
 
     let annouceWinner;
     if (!Winner == '') {
       this.state.isWinner = true;
-      annouceWinner = <span>Game Over. {Winner} has won.</span>;
+      annouceWinner = (
+        <span>
+          Game Over. {Winner == 'Draw' ? Winner : `${Winner} has won`}.
+        </span>
+      );
     }
 
     // game instructions
