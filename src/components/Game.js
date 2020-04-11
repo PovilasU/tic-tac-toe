@@ -1,25 +1,43 @@
 import React from 'react';
 import Square from './Square';
 
+const winlines = [
+  [0, 1, 2],
+  [3, 4, 5],
+  [6, 7, 8],
+  [0, 3, 6],
+  [1, 4, 7],
+  [2, 5, 8],
+  [0, 4, 8],
+  [2, 4, 6],
+];
+
+// function checkWinner(whoseTurn) {
+//   if (whoseTurn == 1) {
+//     console.log('Computer has won');
+//   } else console.log('Human has won');
+// }
+
 export default class Game extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       board: [0, 0, 0, 0, 0, 0, 0, 0, 0],
-      isX: true,
+      isHumanMove: true,
     };
   }
 
   handleClick = (ev) => {
     const board = this.state.board.slice();
-    const squareVal = this.state.isX ? 1 : 2;
+    const squareVal = this.state.isHumanMove ? 2 : 1;
     const index = ev.currentTarget.value;
     board[index] = squareVal;
 
     this.setState({
       board: board,
-      isX: !this.state.isX,
+      isHumanMove: !this.state.isHumanMove,
     });
+    // check winner
   };
 
   render() {
@@ -56,6 +74,16 @@ export default class Game extends React.Component {
         <h1>Diki Daki Du</h1>
 
         <p>Game Instructions: {showRules}</p>
+        <p>
+          {this.state.board[0]} {this.state.board[1]} {this.state.board[2]}
+        </p>
+        <p>
+          {this.state.board[3]} {this.state.board[4]} {this.state.board[5]}
+        </p>
+        <p>
+          {this.state.board[6]} {this.state.board[7]} {this.state.board[8]}
+        </p>
+
         <Square
           value="0"
           disabled={isDisabled(0)}
