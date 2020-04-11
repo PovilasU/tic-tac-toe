@@ -18,6 +18,7 @@ export default class Game extends React.Component {
     this.state = {
       board: [0, 0, 0, 0, 0, 0, 0, 0, 0],
       isHumanMove: true,
+      isWinner: false,
     };
   }
 
@@ -36,13 +37,9 @@ export default class Game extends React.Component {
   render() {
     let computer = 1;
     let human = 2;
-    // computer will move with 'O'
-    // human will move with 'X'
     let computerMove = 'O';
     let humanMove = 'X';
-
     let board = this.state.board.slice();
-
     let Winner = '';
 
     // check winner
@@ -57,6 +54,7 @@ export default class Game extends React.Component {
 
     let annouceWinner;
     if (!Winner == '') {
+      this.state.isWinner = true;
       annouceWinner = <span>Game Over. {Winner} has won.</span>;
     }
 
@@ -89,57 +87,57 @@ export default class Game extends React.Component {
 
         <Square
           value="0"
-          disabled={isDisabled(0)}
+          disabled={isDisabled(0) || this.state.isWinner}
           handleClick={this.handleClick}
           text={squareText(0)}
         />
         <Square
           value="1"
-          disabled={isDisabled(1)}
+          disabled={isDisabled(1) || this.state.isWinner}
           handleClick={this.handleClick}
           text={squareText(1)}
         />
         <Square
           value="2"
-          disabled={isDisabled(2)}
+          disabled={isDisabled(2) || this.state.isWinner}
           handleClick={this.handleClick}
           text={squareText(2)}
         />
         <br />
         <Square
           value="3"
-          disabled={isDisabled(3)}
+          disabled={isDisabled(3) || this.state.isWinner}
           handleClick={this.handleClick}
           text={squareText(3)}
         />
         <Square
           value="4"
-          disabled={isDisabled(4)}
+          disabled={isDisabled(4) || this.state.isWinner}
           handleClick={this.handleClick}
           text={squareText(4)}
         />
         <Square
           value="5"
-          disabled={isDisabled(5)}
+          disabled={isDisabled(5) || this.state.isWinner}
           handleClick={this.handleClick}
           text={squareText(5)}
         />
         <br />
         <Square
           value="6"
-          disabled={isDisabled(6)}
+          disabled={isDisabled(6) || this.state.isWinner}
           handleClick={this.handleClick}
           text={squareText(6)}
         />
         <Square
           value="7"
-          disabled={isDisabled(7)}
+          disabled={isDisabled(7) || this.state.isWinner}
           handleClick={this.handleClick}
           text={squareText(7)}
         />
         <Square
           value="8"
-          disabled={isDisabled(8)}
+          disabled={isDisabled(8) || this.state.isWinner}
           handleClick={this.handleClick}
           text={squareText(8)}
         />
