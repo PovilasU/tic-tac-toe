@@ -6,7 +6,6 @@ export default class Game extends React.Component {
     this.state = {
       board: [0, 0, 0, 0, 0, 0, 0, 0, 0],
       isX: true,
-      test: '',
     };
   }
 
@@ -27,13 +26,25 @@ export default class Game extends React.Component {
       <div>
         <h1>Tic tac toe</h1>
 
-        <button value="0" onClick={this.handleClick}>
+        <button
+          value="0"
+          disabled={!this.state.board[0] == 0}
+          onClick={this.handleClick}
+        >
           {this.state.board[0] == 1 && 'X'} {this.state.board[0] == 2 && 'O'}
         </button>
-        <button value="1" onClick={this.handleClick}>
+        <button
+          value="1"
+          disabled={!this.state.board[1] == 0}
+          onClick={this.handleClick}
+        >
           {this.state.board[1] == 1 && 'X'} {this.state.board[1] == 2 && 'O'}
         </button>
-        <button value="2" onClick={this.handleClick}>
+        <button
+          value="2"
+          disabled={!this.state.board[2] == 0}
+          onClick={this.handleClick}
+        >
           {this.state.board[2] == 1 && 'X'} {this.state.board[2] == 2 && 'O'}
         </button>
       </div>
