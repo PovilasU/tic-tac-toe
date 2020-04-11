@@ -31,18 +31,20 @@ export default class Game extends React.Component {
         </span>
       );
     };
+
+    let isDisabled = (index) => !this.state.board[index] == 0;
     return (
       <div>
-        <h1>Tic tac toe</h1>
+        <h1>Diki Daki Du</h1>
         <Square
           value="0"
-          disabled={!this.state.board[0] == 0}
+          disabled={isDisabled(0)}
           handleClick={this.handleClick}
           text={squareText(0)}
         />
         <Square
           value="1"
-          disabled={!this.state.board[1] == 0}
+          disabled={isDisabled(1)}
           handleClick={this.handleClick}
           text={squareText(1)}
         />
@@ -52,14 +54,3 @@ export default class Game extends React.Component {
     );
   }
 }
-
-// {
-//   this.state.board.map(function (item, i) {
-//     //   console.log('test');
-//     return (
-//       <button value={i}>
-//         {i} {item}
-//       </button>
-//     );
-//   });
-// }
