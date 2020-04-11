@@ -48,8 +48,50 @@ export default class Game extends React.Component {
           handleClick={this.handleClick}
           text={squareText(1)}
         />
-
+        <Square
+          value="2"
+          disabled={isDisabled(2)}
+          handleClick={this.handleClick}
+          text={squareText(2)}
+        />
         <br />
+        <Square
+          value="3"
+          disabled={isDisabled(3)}
+          handleClick={this.handleClick}
+          text={squareText(3)}
+        />
+        <Square
+          value="4"
+          disabled={isDisabled(4)}
+          handleClick={this.handleClick}
+          text={squareText(4)}
+        />
+        <Square
+          value="5"
+          disabled={isDisabled(5)}
+          handleClick={this.handleClick}
+          text={squareText(5)}
+        />
+        <br />
+        <Square
+          value="6"
+          disabled={isDisabled(6)}
+          handleClick={this.handleClick}
+          text={squareText(6)}
+        />
+        <Square
+          value="7"
+          disabled={isDisabled(7)}
+          handleClick={this.handleClick}
+          text={squareText(7)}
+        />
+        <Square
+          value="8"
+          disabled={isDisabled(8)}
+          handleClick={this.handleClick}
+          text={squareText(8)}
+        />
       </div>
     );
   }
