@@ -31,10 +31,12 @@ export default class Game extends React.Component {
     board[index] = squareVal;
 
     // computer turn
+    //  function to loop throug array and  search all indexes or search word
     const indexOfAll = (arr, val) =>
       arr.reduce((acc, el, i) => (el === val ? [...acc, i] : acc), []);
+    // look for zero's indexes in board array
     let zeroIndexes = indexOfAll(board, 0);
-
+    // declare random available zero index
     index = zeroIndexes[Math.floor(Math.random() * zeroIndexes.length)];
     board[index] = 1;
 
@@ -67,7 +69,7 @@ export default class Game extends React.Component {
     });
 
     if (!Winner == '') {
-      this.state.isWinner = true;
+      this.state.isGameover = true;
       this.state.Winner = Winner;
     }
   };
@@ -77,6 +79,7 @@ export default class Game extends React.Component {
     let human = 2;
     let computerMove = 'O';
     let humanMove = 'X';
+    const board = this.state.board.slice();
 
     let annouceWinner;
 
@@ -112,69 +115,31 @@ export default class Game extends React.Component {
       );
     };
 
+    let handleClick = this.handleClick;
+    let isGameover = this.state.isGameover;
     let isDisabled = (index) => !this.state.board[index] == 0;
+    let gameboard = board.map(function (item, i) {
+      let breakline = false;
+      // add break line after every 3 buttons
+      (i + 1) % 3 == 0 && (breakline = true);
+      return (
+        <Square
+          key={i}
+          value={i}
+          disabled={isDisabled(i) || isGameover}
+          handleClick={handleClick}
+          text={squareText(i)}
+          addbreakline={breakline}
+        />
+      );
+    });
     return (
       <div>
         <h1>Diki Daki Du</h1>
         <p> {showRules}</p>
         <p>{annouceWinner}</p>
-
-        <Square
-          value="0"
-          disabled={isDisabled(0) || this.state.isWinner}
-          handleClick={this.handleClick}
-          text={squareText(0)}
-        />
-        <Square
-          value="1"
-          disabled={isDisabled(1) || this.state.isWinner}
-          handleClick={this.handleClick}
-          text={squareText(1)}
-        />
-        <Square
-          value="2"
-          disabled={isDisabled(2) || this.state.isWinner}
-          handleClick={this.handleClick}
-          text={squareText(2)}
-        />
+        {gameboard}
         <br />
-        <Square
-          value="3"
-          disabled={isDisabled(3) || this.state.isWinner}
-          handleClick={this.handleClick}
-          text={squareText(3)}
-        />
-        <Square
-          value="4"
-          disabled={isDisabled(4) || this.state.isWinner}
-          handleClick={this.handleClick}
-          text={squareText(4)}
-        />
-        <Square
-          value="5"
-          disabled={isDisabled(5) || this.state.isWinner}
-          handleClick={this.handleClick}
-          text={squareText(5)}
-        />
-        <br />
-        <Square
-          value="6"
-          disabled={isDisabled(6) || this.state.isWinner}
-          handleClick={this.handleClick}
-          text={squareText(6)}
-        />
-        <Square
-          value="7"
-          disabled={isDisabled(7) || this.state.isWinner}
-          handleClick={this.handleClick}
-          text={squareText(7)}
-        />
-        <Square
-          value="8"
-          disabled={isDisabled(8) || this.state.isWinner}
-          handleClick={this.handleClick}
-          text={squareText(8)}
-        />
       </div>
     );
   }
