@@ -19,20 +19,57 @@ export default class Game extends React.Component {
       board: [0, 0, 0, 0, 0, 0, 0, 0, 0],
       isHumanMove: true,
       isWinner: false,
+      Winner: '',
     };
   }
 
   handleClick = (ev) => {
     const board = this.state.board.slice();
-    // const squareVal = this.state.isHumanMove ? 2 : 1;
+    // human turn
     const squareVal = this.state.isHumanMove && 2;
-    const index = ev.currentTarget.value;
+    let index = ev.currentTarget.value;
     board[index] = squareVal;
+
+    // computer turn
+    const indexOfAll = (arr, val) =>
+      arr.reduce((acc, el, i) => (el === val ? [...acc, i] : acc), []);
+    let zeroIndexes = indexOfAll(board, 0);
+
+    index = zeroIndexes[Math.floor(Math.random() * zeroIndexes.length)];
+    board[index] = 1;
 
     this.setState({
       board: board,
-      isHumanMove: !this.state.isHumanMove,
     });
+
+    let computer = 1;
+    let human = 2;
+
+    let Winner = '';
+
+    function seachZero(index) {
+      return index == 0;
+    }
+
+    winlines.map(function (item, i) {
+      if ((board[item[0]] & board[item[1]] & board[item[2]]) == human) {
+        Winner = 'Human';
+      } else if (
+        (board[item[0]] & board[item[1]] & board[item[2]]) ==
+        computer
+      ) {
+        Winner = 'Computer';
+      }
+
+      if (board.find(seachZero) === undefined) {
+        Winner = 'Draw';
+      }
+    });
+
+    if (!Winner == '') {
+      this.state.isWinner = true;
+      this.state.Winner = Winner;
+    }
   };
 
   render() {
@@ -40,55 +77,17 @@ export default class Game extends React.Component {
     let human = 2;
     let computerMove = 'O';
     let humanMove = 'X';
-    let board = this.state.board.slice();
-    let Winner = '';
-
-    function seachZero(index) {
-      return index == 0;
-    }
-
-    function checkWinnder() {
-      // check winner
-      winlines.map(function (item, i) {
-        if ((board[item[0]] & board[item[1]] & board[item[2]]) == human) {
-          Winner = 'Human';
-        } else if (
-          (board[item[0]] & board[item[1]] & board[item[2]]) ==
-          computer
-        ) {
-          Winner = 'Computer';
-          console.log('adaddsds I am here');
-        }
-
-        if (board.find(seachZero) === undefined) {
-          Winner = 'Draw';
-        }
-        console.log('I am here');
-      });
-    }
-    checkWinnder();
-    //TODO run checkWinner after board state updated
-    // find indexes of all zeros in board
-    const indexOfAll = (arr, val) =>
-      arr.reduce((acc, el, i) => (el === val ? [...acc, i] : acc), []);
-
-    // Computer turn
-    if (!this.state.isHumanMove) {
-      //   gets all zero indexes in board array
-      let zeroIndexes = indexOfAll(board, 0);
-      //get random index from availabe squares
-      let index = zeroIndexes[Math.floor(Math.random() * zeroIndexes.length)];
-      this.state.board[index] = 1;
-      this.state.isHumanMove = !this.state.isHumanMove;
-      console.log('check winner');
-    }
 
     let annouceWinner;
-    if (!Winner == '') {
-      this.state.isWinner = true;
+
+    if (!this.state.Winner == '') {
       annouceWinner = (
         <span>
-          Game Over. {Winner == 'Draw' ? Winner : `${Winner} has won`}.
+          Game Over.{' '}
+          {this.state.Winner.Winner == 'Draw'
+            ? this.state.Winner.Winner
+            : `${this.state.Winner} has won`}
+          .
         </span>
       );
     }
