@@ -1,5 +1,6 @@
 import React from 'react';
 import Square from './Square';
+// import Margutis from '../images/margutis.jpg';
 
 const winlines = [
   [0, 1, 2],
@@ -136,6 +137,7 @@ export default class Game extends React.Component {
     return (
       <div>
         <h1>Diki Daki Du</h1>
+        {/* <img className="square" src={Margutis} /> */}
         <p> {showRules}</p>
         <p>{annouceWinner}</p>
         {gameboard}

@@ -8,3 +8,20 @@ $red-color: red;
 .red {
   color: $red-color;
 }
+
+.square {
+  height: 100px;
+  width: 80px;
+  background-image: url('../images/grass.jpg');
+  &--square {
+    background-color: red;
+  }
+
+  &--human {
+    background-image: url('../images/egg.jpg');
+    background-color: red;
+  }
+  &--computer {
+    background-image: url('../images/egg.jpg');
+  }
+}
