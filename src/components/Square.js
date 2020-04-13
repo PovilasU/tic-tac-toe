@@ -1,17 +1,19 @@
 import React from 'react';
 
 export default function Square(props) {
+  let subclass;
+  props.text.props.children == 'X' && (subclass = 'human');
+  props.text.props.children == 'O' && (subclass = 'computer');
+  let classname = `square square--${subclass}`;
+
   return (
     <span>
       <button
-        className="square square--computer"
+        className={classname}
         disabled={props.disabled}
         value={props.value}
         onClick={props.handleClick}
-      >
-        &nbsp;
-        {props.text}
-      </button>
+      />
       {props.addbreakline && <br />}
     </span>
   );

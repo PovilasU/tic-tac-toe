@@ -123,10 +123,13 @@ export default class Game extends React.Component {
       let breakline = false;
       // add break line after every 3 buttons
       (i + 1) % 3 == 0 && (breakline = true);
+      let test1 = 'test123';
+      let test = `square square--${test1}`;
       return (
         <Square
           key={i}
           value={i}
+          classname={test}
           disabled={isDisabled(i) || isGameover}
           handleClick={handleClick}
           text={squareText(i)}
