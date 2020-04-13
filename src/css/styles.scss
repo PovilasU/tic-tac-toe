@@ -1,6 +1,18 @@
 $brand-color: blue;
 $red-color: red;
-
+body {
+  background: #abbaab; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #ffffff,
+    #abbaab
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #ffffff,
+    #abbaab
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
 .blue {
   color: $brand-color;
 }
@@ -13,13 +25,9 @@ $red-color: red;
   height: 100px;
   width: 80px;
   background-image: url('../images/grass.jpg');
-  &--square {
-    background-color: red;
-  }
 
   &--human {
     background-image: url('../images/egg.jpg');
-    background-color: red;
   }
   &--computer {
     background-image: url('../images/chick.jpg');

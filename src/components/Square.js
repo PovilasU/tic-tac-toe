@@ -2,15 +2,17 @@ import React from 'react';
 
 export default function Square(props) {
   let subclass;
-  props.text.props.children == 'X' && (subclass = 'human');
-  props.text.props.children == 'O' && (subclass = 'computer');
+  let disabled = false;
+  props.text.props.children == 'X' && (subclass = 'human') & (disabled = true);
+  props.text.props.children == 'O' &&
+    (subclass = 'computer') & (disabled = true);
   let classname = `square square--${subclass}`;
-
+  // let newGame = props.newGame;
   return (
     <span>
       <button
         className={classname}
-        disabled={props.disabled}
+        disabled={disabled || props.isGameover}
         value={props.value}
         onClick={props.handleClick}
       />

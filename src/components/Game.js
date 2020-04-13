@@ -21,12 +21,14 @@ export default class Game extends React.Component {
       isHumanMove: true,
       isWinner: false,
       Winner: '',
+      newGame: false,
     };
   }
 
   newGame = () => {
     this.setState({
       board: [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      newGame: true,
     });
   };
 
@@ -124,7 +126,8 @@ export default class Game extends React.Component {
 
     let handleClick = this.handleClick;
     let isGameover = this.state.isGameover;
-    let isDisabled = (index) => !this.state.board[index] == 0;
+    let newGame = this.state.newGame;
+    // let isDisabled = (index) => !this.state.board[index] == 0;
     let gameboard = board.map(function (item, i) {
       let breakline = false;
       // add break line after every 3 buttons
@@ -134,7 +137,9 @@ export default class Game extends React.Component {
         <Square
           key={i}
           value={i}
-          disabled={isDisabled(i) || isGameover}
+          // disabled={isDisabled(i) || isGameover}
+          isGameover={isGameover}
+          newGame={newGame}
           handleClick={handleClick}
           text={squareText(i)}
           addbreakline={breakline}
@@ -144,7 +149,7 @@ export default class Game extends React.Component {
     return (
       <div>
         <h1>Diki Daki Du</h1>
-        {/* <img className="square" src={Margutis} /> */}
+
         <p> {showRules}</p>
         <div>
           <button onClick={this.newGame}>New Game</button>
