@@ -185,9 +185,31 @@ export default class Game extends React.Component {
         <div className="flex-container">
           <p>
             <a href="https://github.com/PovilasU/tic-tac-toe">
-              Source code Github
+              Link to source code (Github)
             </a>
           </p>
+        </div>
+        <div className="flex-container">
+          <p>
+            <a href="https://www.linkedin.com/in/povilas-urbonas-0a6a53a4/">
+              LinkedIn
+            </a>
+          </p>
+        </div>
+        <div className="flex-container">
+          <div className="flex-column">
+            <h2>About</h2>
+            <p> This is my implementation of game 'Tic-Tac-Toe'</p>
+            <p>
+              For this project I used Webpack, React.js, states,SCSS , CSS
+              Flexbox, MaterialUI, Hosted on AWS Amplify.
+            </p>
+            <p>
+              Game has Easter theme because I developed this game during Easter
+              weekend
+            </p>
+            <p>2020</p>
+          </div>
         </div>
       </div>
     );
