@@ -13,13 +13,15 @@ const CompressionPlugin = require('compression-webpack-plugin');
 const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
 const { GenerateSW } = require('workbox-webpack-plugin');
 const { InjectManifest } = require('workbox-webpack-plugin');
+const PurifyCSSPlugin = require('purifycss-webpack');
+const glob = require('glob-all');
 
 module.exports = merge(common, {
   mode: 'production',
   // devtool: 'source-map',
   output: {
     filename: '[name].[contentHash].bundle.js',
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, 'dist'),
   },
 
   plugins: [
@@ -38,28 +40,38 @@ module.exports = merge(common, {
       algorithm: 'gzip',
       test: /\.js$|\.css$|\.html$/,
       threshold: 10240,
-      minRatio: 0.8
+      minRatio: 0.8,
     }),
 
     new OptimizeCssAssetsPlugin(),
     new MiniCssExtractPlugin({
-      filename: '[name].[contentHash].css'
+      filename: '[name].[contentHash].css',
     }),
     new CleanWebpackPlugin(),
     new CopyPlugin([
-      { from: 'src/robots.txt', to: 'robots.txt' }
+      { from: 'src/robots.txt', to: 'robots.txt' },
       // { from: 'src/service-worker.js', to: 'service-worker.js' }
       // { from: 'src/manifest.json', to: 'manifest.json' }
-    ])
+    ]),
+    new PurifyCSSPlugin({
+      paths: glob.sync([
+        path.join(__dirname, 'src/*.html'),
+        path.join(__dirname, 'src/*.js'),
+      ]),
+      minimize: true,
+      purifyOptions: {
+        whitelist: [],
+      },
+    }),
   ],
 
   module: {
     rules: [
       {
         test: /\.scss$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
-      }
-    ]
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+      },
+    ],
   },
   optimization: {
     minimize: true,
@@ -78,9 +90,9 @@ module.exports = merge(common, {
           removeRedundantAttributes: true,
           removeScriptTypeAttributes: true,
           removeStyleLinkTypeAttributes: true,
-          useShortDoctype: true
-        }
-      })
-    ]
-  }
+          useShortDoctype: true,
+        },
+      }),
+    ],
+  },
 });
