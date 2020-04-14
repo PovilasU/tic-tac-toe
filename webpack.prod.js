@@ -1,4 +1,5 @@
 const path = require('path');
+const glob = require('glob');
 const common = require('./webpack.common');
 const merge = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -13,8 +14,11 @@ const CompressionPlugin = require('compression-webpack-plugin');
 const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
 const { GenerateSW } = require('workbox-webpack-plugin');
 const { InjectManifest } = require('workbox-webpack-plugin');
-const PurifyCSSPlugin = require('purifycss-webpack');
-const glob = require('glob-all');
+const PurgecssPlugin = require('purgecss-webpack-plugin');
+
+const PATHS = {
+  src: path.join(__dirname, 'src'),
+};
 
 module.exports = merge(common, {
   mode: 'production',
@@ -24,6 +28,46 @@ module.exports = merge(common, {
     path: path.resolve(__dirname, 'dist'),
   },
 
+  module: {
+    rules: [
+      {
+        test: /\.scss$/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+      },
+    ],
+  },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        styles: {
+          name: 'styles',
+          test: /\.css$/,
+          chunks: 'all',
+          enforce: true,
+        },
+      },
+    },
+    minimize: true,
+    minimizer: [
+      new TerserPlugin(),
+      new OptimizeCssAssetsPlugin(),
+      new HtmlWebpackPlugin({
+        hash: true,
+        template: './src/template.html',
+        filename: 'index.html', //relative to root of the application
+        favicon: './src/images/favicon.ico',
+        minify: {
+          collapseWhitespace: true,
+          removeAttributeQuotes: true,
+          removeComments: true,
+          removeRedundantAttributes: true,
+          removeScriptTypeAttributes: true,
+          removeStyleLinkTypeAttributes: true,
+          useShortDoctype: true,
+        },
+      }),
+    ],
+  },
   plugins: [
     //  new BundleAnalyzerPlugin(),
     // new WorkboxWebpackPlugin.InjectManifest({
@@ -47,52 +91,15 @@ module.exports = merge(common, {
     new MiniCssExtractPlugin({
       filename: '[name].[contentHash].css',
     }),
+    new PurgecssPlugin({
+      paths: glob.sync(`${PATHS.src}/**/*`, { nodir: true }),
+    }),
+
     new CleanWebpackPlugin(),
     new CopyPlugin([
       { from: 'src/robots.txt', to: 'robots.txt' },
       // { from: 'src/service-worker.js', to: 'service-worker.js' }
       // { from: 'src/manifest.json', to: 'manifest.json' }
     ]),
-    new PurifyCSSPlugin({
-      paths: glob.sync([
-        path.join(__dirname, 'dist/*.html'),
-        path.join(__dirname, 'dist/*.js'),
-      ]),
-      minimize: true,
-      purifyOptions: {
-        whitelist: [],
-      },
-    }),
   ],
-
-  module: {
-    rules: [
-      {
-        test: /\.scss$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
-      },
-    ],
-  },
-  optimization: {
-    minimize: true,
-    minimizer: [
-      new TerserPlugin(),
-      new OptimizeCssAssetsPlugin(),
-      new HtmlWebpackPlugin({
-        hash: true,
-        template: './src/template.html',
-        filename: 'index.html', //relative to root of the application
-        favicon: './src/images/favicon.ico',
-        minify: {
-          collapseWhitespace: true,
-          removeAttributeQuotes: true,
-          removeComments: true,
-          removeRedundantAttributes: true,
-          removeScriptTypeAttributes: true,
-          removeStyleLinkTypeAttributes: true,
-          useShortDoctype: true,
-        },
-      }),
-    ],
-  },
 });
