@@ -149,7 +149,6 @@ export default class Game extends React.Component {
       );
     });
 
-    console.log('test');
     return (
       <div className="container">
         <div className="flex-container">
