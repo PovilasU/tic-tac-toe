@@ -1,6 +1,19 @@
 import React from 'react';
 import Square from './Square';
-// import Margutis from '../images/margutis.jpg';
+import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  },
+}));
 
 const winlines = [
   [0, 1, 2],
@@ -107,11 +120,12 @@ export default class Game extends React.Component {
     // game instructions
     let showRules = (
       <span>
-        Game Instructions: Choose a cell numbered from 1 to 9 as below
-        <br /> 1 | 2 | 3
-        <br />
-        4 | 5 | 6
-        <br />7 | 8 | 9
+        <span>
+          Game Instructions: Choose a cell numbered from 1 to 9 as below
+        </span>
+        <span className="flex-container">1 | 2 | 3</span>
+        <span className="flex-container">4 | 5 | 6</span>
+        <span className="flex-container">7 | 8 | 9</span>
       </span>
     );
 
@@ -147,17 +161,34 @@ export default class Game extends React.Component {
       );
     });
     return (
-      <div>
-        <h1>Diki Daki Du</h1>
-
-        <p> {showRules}</p>
-        <div>
-          <button onClick={this.newGame}>New Game</button>
+      <div className="container">
+        <div className="flex-container">
+          <h1>Diki Daki Du</h1>
         </div>
-        <p>{annouceWinner}</p>
+        <div className="flex-container">
+          <p> {showRules}</p>
+        </div>
 
-        {gameboard}
-        <br />
+        <div className="flex-container">
+          <Button variant="outlined" color="default" onClick={this.newGame}>
+            New Game
+          </Button>
+        </div>
+        <div className="flex-container">
+          <p>{annouceWinner}</p>
+        </div>
+
+        <div className="flex-container">
+          <div>{gameboard}</div>
+        </div>
+
+        <div className="flex-container">
+          <p>
+            <a href="https://github.com/PovilasU/tic-tac-toe">
+              Source code Github
+            </a>
+          </p>
+        </div>
       </div>
     );
   }
