@@ -1,19 +1,6 @@
 import React from 'react';
 import Square from './Square';
 import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  },
-}));
 
 const winlines = [
   [0, 1, 2],
@@ -35,13 +22,14 @@ export default class Game extends React.Component {
       isWinner: false,
       Winner: '',
       newGame: false,
+      isGameover: false,
     };
   }
 
   newGame = () => {
     this.setState({
       board: [0, 0, 0, 0, 0, 0, 0, 0, 0],
-      newGame: true,
+      isGameover: false,
     });
   };
 
@@ -75,7 +63,7 @@ export default class Game extends React.Component {
       return index == 0;
     }
 
-    winlines.map(function (item, i) {
+    winlines.map(function (item) {
       if ((board[item[0]] & board[item[1]] & board[item[2]]) == human) {
         Winner = 'Human';
       } else if (
@@ -108,15 +96,18 @@ export default class Game extends React.Component {
     if (!this.state.Winner == '') {
       annouceWinner = (
         <span>
-          Game Over.{' '}
-          {this.state.Winner.Winner == 'Draw'
-            ? this.state.Winner.Winner
+          Game Over.
+          {this.state.Winner == 'Draw'
+            ? this.state.Winner
             : `${this.state.Winner} has won`}
           .
         </span>
       );
     }
-
+    // if sum of array elements equals zero then it is new game
+    this.state.board.reduce(function (a, b) {
+      return a + b;
+    }, 0) == 0 && (annouceWinner = '');
     // game instructions
     let showRules = (
       <span>
@@ -140,8 +131,7 @@ export default class Game extends React.Component {
 
     let handleClick = this.handleClick;
     let isGameover = this.state.isGameover;
-    let newGame = this.state.newGame;
-    // let isDisabled = (index) => !this.state.board[index] == 0;
+
     let gameboard = board.map(function (item, i) {
       let breakline = false;
       // add break line after every 3 buttons
@@ -151,9 +141,7 @@ export default class Game extends React.Component {
         <Square
           key={i}
           value={i}
-          // disabled={isDisabled(i) || isGameover}
           isGameover={isGameover}
-          newGame={newGame}
           handleClick={handleClick}
           text={squareText(i)}
           addbreakline={breakline}
@@ -204,7 +192,7 @@ export default class Game extends React.Component {
         <div className="flex-container">
           <div className="flex-column">
             <h2>About</h2>
-            <p> This is my implementation of game 'Tic-Tac-Toe'</p>
+            <p> This is my implementation of game `Tic-Tac-Toe`</p>
             <p>
               For this project I used Webpack, React.js, states,SCSS , CSS
               Flexbox, MaterialUI, Hosted on AWS Amplify.
