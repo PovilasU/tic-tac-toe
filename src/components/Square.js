@@ -3,9 +3,9 @@ import React from 'react';
 export default function Square(props) {
   let subclass;
   const { value, handleClick, text, isGameover } = props;
-  text.props.children == 'X' && (subclass = 'human');
-  text.props.children == 'O' && (subclass = 'computer');
-  let classname = `square square--${subclass}`;
+  text.props.children == 'X' && (subclass = 'square--human');
+  text.props.children == 'O' && (subclass = 'square--computer');
+  let classname = `square ${subclass}`;
 
   return (
     <span>
