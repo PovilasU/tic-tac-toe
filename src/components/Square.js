@@ -15,6 +15,7 @@ export default function Square(props) {
         disabled={text.props.children || isGameover}
         value={value}
         onClick={handleClick}
+        aria-label="Center Align"
       />
       {props.addbreakline && <br />}
     </span>

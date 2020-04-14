@@ -170,7 +170,12 @@ export default class Game extends React.Component {
         </div>
 
         <div className="flex-container">
-          <Button variant="outlined" color="default" onClick={this.newGame}>
+          <Button
+            variant="outlined"
+            color="default"
+            onClick={this.newGame}
+            aria-label="Center Align"
+          >
             New Game
           </Button>
         </div>
