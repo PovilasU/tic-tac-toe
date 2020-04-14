@@ -1,7 +1,7 @@
 import React from 'react';
 const classNames = require('classnames');
 
-export default function Square(props) {
+const Square = (props) => {
   const { value, handleClick, text, isGameover } = props;
   let btnClass = classNames('square', {
     'square--human': text.props.children == 'X',
@@ -20,4 +20,6 @@ export default function Square(props) {
       {props.addbreakline && <br />}
     </span>
   );
-}
+};
+
+export default Square;
