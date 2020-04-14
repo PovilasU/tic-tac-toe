@@ -199,6 +199,10 @@ export default class Game extends React.Component {
               Flexbox, MaterialUI, Hosted on AWS Amplify.
             </p>
             <p>
+              Optimization: using purgecss-webpack-plugin to remove unused css
+              from bundle
+            </p>
+            <p>
               Game has Easter theme because I developed this game during Easter
               weekend
             </p>
