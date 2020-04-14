@@ -195,7 +195,7 @@ export default class Game extends React.Component {
             <h2>About</h2>
             <p> This is my implementation of game `Tic-Tac-Toe`</p>
             <p>
-              For this project I used Webpack, React.js, states,SCSS , CSS
+              For this project I used Webpack, React.js, states, SCSS, CSS
               Flexbox, MaterialUI, Hosted on AWS Amplify.
             </p>
             <p>

@@ -7,11 +7,6 @@ export default function Square(props) {
     'square--human': text.props.children == 'X',
     'square--computer': text.props.children == 'O',
   });
-  // let subclass;
-  //
-  // text.props.children == 'X' && (subclass = 'square--human');
-  // text.props.children == 'O' && (subclass = 'square--computer');
-  // let classname = `square ${subclass}`;
 
   return (
     <span>
